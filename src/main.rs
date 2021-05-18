@@ -107,13 +107,18 @@ fn move_pixels(pixels: Vec<PixelContent>) -> Vec<PixelContent>
     clone
 }
 
-static WIDTH: u32 = 800;
-static HEIGHT: u32 = 600;
+static WIDTH: u32 = 1280;
+static HEIGHT: u32 = 720;
+
+fn round(n: i32) -> i32{
+    return n + (10 - (n % 10))
+}
+
 pub fn main() {
     let sdl_context = sdl2::init().unwrap();
     let video_subsystem = sdl_context.video().unwrap();
 
-    let window = video_subsystem.window("rust-sdl2 demo", WIDTH, HEIGHT)
+    let window = video_subsystem.window("Pixel cascade", WIDTH, HEIGHT)
         .position_centered()
         .build()
         .unwrap();
@@ -123,10 +128,7 @@ pub fn main() {
 
     let mut event_pump = sdl_context.event_pump().unwrap();
     let mut i = 0;
-    let mut pixels: Vec<PixelContent> = vec![PixelContent::new(290, 10)];
-    fn round(n: i32) -> i32{
-        return n + (10 - (n % 10))
-    }
+    let mut pixels: Vec<PixelContent> = vec![];
     'running: loop {
         for event in event_pump.poll_iter() {
             match event {
